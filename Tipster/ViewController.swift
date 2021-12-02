@@ -29,8 +29,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         return cell
             
-        
     }
+    
     @IBOutlet weak var tableView: UITableView!
     var movies = [[String:Any]]()
 
@@ -60,6 +60,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
              }
         }
         task.resume()
+    }
+    // Mark: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Find the selected movie
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for:cell)!
+        let movie = movies[indexPath.row]
+        // Pass the selected movie to the details view controller
+        let detailsViewController = segue.destination as! MovieDetailsViewController
+        detailsViewController.movie = movie
+        tableView.deselectRow(at: indexPath, animated: true)
+        
     }
 
 
